@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import $ from 'jquery';
+import login from './hevy_api.js'
+import config from "./config.json";
 
 function App() {
   return (
@@ -23,5 +24,9 @@ function App() {
     </div>
   );
 }
+
+login(config['x-api-key'], config['auth-token']).then(data => {
+  console.log(data)
+})
 
 export default App;

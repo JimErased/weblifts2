@@ -1,4 +1,4 @@
-async function login (apikey, authToken) {
+async function login () {
   const options = {
     method: 'GET',
     headers: {
@@ -12,13 +12,17 @@ async function login (apikey, authToken) {
       'Sec-Fetch-Mode': 'cors',
       'Sec-Fetch-Site': 'cross-site',
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
-      'auth-token': authToken,
+      'auth-token': '921c2aa1-2c12-497d-97e4-abadf0606611',
       'sec-ch-ua': '"Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"',
       'sec-ch-ua-mobile': '?0',
       'sec-ch-ua-platform': '"Windows"',
-      'x-api-key': apikey,
+      'x-api-key': 'shelobs_hevy_web',
     }
   };
+
+  function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  }
 
   let username
   let max
@@ -46,27 +50,21 @@ async function login (apikey, authToken) {
   })
     
   async function callApi(username, max) {
-    let apiData
-    await fetch(`https://api.hevyapp.com/user_workouts_paged?username=${username}&limit=${max}&offset=0`, options)
+    fetch(`https://api.hevyapp.com/user_workouts_paged?username=${username}&limit=${max}&offset=0`, options)
     .then(response => response.json())
     .then(data => {
       // Save to file
-      // This works, need to pass it on console.log(data)
-      apiData = data
+      console.log(data)
       return data
     })
     .catch(err => {
       console.log(err)
       throw err
     })
-    return apiData
   }
 
-  let apiData = callApi(username, max).then(data => {
-                  apiData = data
-                  return apiData
-                })
-  return apiData
+  callApi(username, max)
+      
 }
 
-export default login
+login()
