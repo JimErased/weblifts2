@@ -1,4 +1,6 @@
-async function login (apikey, authToken) {
+let testData = require('./testdata.json')
+
+async function downloadData(apikey, authToken) {
   const options = {
     method: 'GET',
     headers: {
@@ -66,7 +68,43 @@ async function login (apikey, authToken) {
                   apiData = data
                   return apiData
                 })
+  // processData(apiData)
   return apiData
 }
 
-export default login
+function oneRepMax(testData, exercise = "Bench Press (Barbell)") {
+  var oneRepMaxList = []
+  var dateList = []
+  var exerciseName = exercise
+
+  console.log("From function: " + exercise)
+  
+  // Iterate through each workout
+  for (let i in testData["workouts"]) {
+
+    // Get Date
+    var date = testData["workouts"][i]["created_at"].substring(0,10)
+
+    // Iterate through each exercise in each workout
+    for (let j in testData["workouts"][i]["exercises"]) {
+
+      // Working console.log("From data: " + testData["workouts"][i]["exercises"][j]["title"])
+
+      if (testData["workouts"][i]["exercises"][j]["title"] === exercise) {
+
+        // Iterate through each set in each exercise in each workout
+        for(let k in testData["workouts"][i]["exercises"][j]["sets"]) {
+          var oneRepMax = 0
+          if (testData["workouts"][i]["exercises"][j]["sets"][k]["weight_kg"] > oneRepMax)
+          oneRepMax = testData["workouts"][i]["exercises"][j]["sets"][k]["weight_kg"]
+        }
+
+        dateList.push(date)
+        oneRepMaxList.push(oneRepMax)
+
+      }
+    }
+  }
+}
+
+export default { downloadData, oneRepMax }

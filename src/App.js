@@ -25,8 +25,8 @@ function App() {
   );
 }
 
-login(config['x-api-key'], config['auth-token']).then(data => {
-  console.log(data)
-})
+//downloadData(config['x-api-key'], config['auth-token']).then(data => {
+//  console.log(data)
+//})
 
 export default App;
